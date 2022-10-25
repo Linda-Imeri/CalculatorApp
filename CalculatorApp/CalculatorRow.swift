@@ -23,6 +23,7 @@ struct CalculatorRow: View {
 
 struct CalculatorRow_Previews: PreviewProvider {
     static var previews: some View {
-        CalculatorRow()
+        CalculatorRow(labels: ["1","2","3","+"])
+            .previewLayout(.fixed(width: 300, height: 100))
     }
 }
