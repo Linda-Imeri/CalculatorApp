@@ -41,6 +41,17 @@ class Calculator: ObservableObject{
             operatorPressed(op: Operator())
         }
     }
+    func setDisplayValue(number: Double){
+        //Don't display decimal if number is an integer
+        if number == floor(number){
+            displayValue = "\(Int(number))"
+        }
+        //Display decimal
+        else{
+            let decimalPlaces = 10
+            displayValue = "\(round(number * pow(10,decimalPlaces)) / pow(10,decimalPlaces))"
+        }
+    }
     func reset(){
         currentOp = nil
         currentNumber = 0
@@ -56,11 +67,37 @@ class Calculator: ObservableObject{
         
     }
     func numberPressed(value: Double){
-        
+        // If equals was pressed clear the current numbers
+        if equalPress{
+            currentNumber = nil
+            previousNumber = nil
+            equalPress = false
+        }
+        //If there is no current number, set it to the value
+        if currentNumber == nil{
+            //currentNumber = value / pow(10, decimalPlace)
+        }
+        //otherwise, add the value to the current number
+        else{
+            //if no decimal was typed, add the value as the last digit of the number
+            if decimalPlace == 0 {
+                //force unwrap because we checked that its not nil
+                currentNumber = currentNumber! * 10 + value
+                //Otherwise,add the value as the last decimal of the numbers
+            }
+            else{
+                currentNumber = currentNumber! + value / pow(10,decimalPlace)
+                decimalPlace += 1
+                
+            }
+        }
+        //Update the UI
+        setDisplayValue(number: currentNumber!)
     }
     func operatorPressed(op: Operator){
         
     }
-
-    
+}
+func pow(_ base: Int, _ exp: Int) -> Double{
+    return pow(Double(base), Double(exp))
 }
