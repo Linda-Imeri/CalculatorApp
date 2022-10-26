@@ -9,7 +9,7 @@ import Foundation
 
 class Calculator: ObservableObject{
     //Used to update the UI
-    @Published var displayValue = "0"
+    @Published var displayValue = "8"
     
     //Store the current operator
     var currentOp: Operator?
@@ -27,7 +27,8 @@ class Calculator: ObservableObject{
     /// Select the appropiate function based on the label of he button pressed
     func buttonPressed(label: String){
         if label == "CE"{
-            
+            displayValue = "0"
+            reset()
         }
         else if label == "="{
             equalsClicked()
@@ -41,7 +42,11 @@ class Calculator: ObservableObject{
         }
     }
     func reset(){
-        
+        currentOp = nil
+        currentNumber = 0
+        previousNumber = nil
+        equalPress = false
+        decimalPlace = 0
     }
     func equalsClicked(){
         
