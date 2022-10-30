@@ -96,7 +96,21 @@ class Calculator: ObservableObject{
     }
 
     func decimalClicked(){
-        
+        // If equals was pressed, reset the current numbers
+        if equalPress{
+            currentNumber = nil
+            previousNumber = nil
+            equalPress = false
+        }
+        // If a "." was typed first, set the current number
+        if currentNumber == nil {
+            currentNumber = 0
+        }
+        // Set the decimal place
+        decimalPlace = 1
+        // Update the UI
+        setDisplayValue(number: currentNumber!)
+        displayValue.append(".")
     }
     func numberPressed(value: Double){
         // If equals was pressed clear the current numbers
