@@ -120,9 +120,9 @@ class Calculator: ObservableObject{
             equalPress = false
         }
         //If there is no current number, set it to the value
-        if currentNumber == nil{
+        if currentNumber == nil {
             if checkForDivision(){return}
-            //currentNumber = value / pow(10, decimalPlace)
+             currentNumber = value / pow(10, decimalPlace)
         }
         //otherwise, add the value to the current number
         else{
