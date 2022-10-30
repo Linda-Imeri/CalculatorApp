@@ -59,8 +59,40 @@ class Calculator: ObservableObject{
         equalPress = false
         decimalPlace = 0
     }
+    // Returns true if division by 0 could happen
+    func checkForDivision() -> Bool {
+        if currentOp!.isDivision && (currentNumber == nil && previousNumber == 0 || currentNumber == 0){
+            displayValue = "Error"
+            reset()
+            return true
+        }
+        return false
+    }
     func equalsClicked(){
-        
+        // Check if we have an operation to perform
+        if currentOp != nil {
+            //Reset the decimal place for current number
+            decimalPlace = 0
+            //Guard for division by 0
+            if checkForDivision(){return}
+            //Check if we have at least one operator
+            if currentNumber != nil || previousNumber != nil {
+                // Compute the total
+                let total = currentOp!.op(previousNumber ?? currentNumber!, currentNumber ?? previousNumber!)
+                // Update the first operand
+                if currentNumber == nil {
+                    currentNumber = previousNumber
+                }
+                // Update the second operand
+                previousNumber = total
+                
+                //Set the equaled flag
+                equalPress = true
+                
+                //Update UI
+                setDisplayValue(number: total)
+            }
+        }
     }
 
     func decimalClicked(){
@@ -75,6 +107,7 @@ class Calculator: ObservableObject{
         }
         //If there is no current number, set it to the value
         if currentNumber == nil{
+            if checkForDivision(){return}
             //currentNumber = value / pow(10, decimalPlace)
         }
         //otherwise, add the value to the current number
